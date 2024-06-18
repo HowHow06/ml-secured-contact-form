@@ -1,12 +1,11 @@
+import cors from 'cors';
 import express, { Express } from 'express';
-import config from './config/config';
-import morganMiddleware from './middlewares/httpLogger';
-
-import http from 'http';
-
 import helmet from 'helmet';
+import http from 'http';
 import httpStatus from 'http-status';
+import config from './config/config';
 import errorHandlerMiddleware from './middlewares/errorHandler';
+import morganMiddleware from './middlewares/httpLogger';
 import router from './routes/v1';
 import ApiError from './utils/apiError';
 import logger from './utils/logger';
@@ -26,13 +25,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 if (config.env === 'production') {
-  // const corsOptions = {
-  //   origin: 'https://myclientappdomain.com',
-  //   optionsSuccessStatus: 200,
-  // };
-  // // enable cors
-  // app.use(cors(corsOptions));
-  // app.options('*', cors(corsOptions));
+  // Parse the environment variable into an array
+  const corsOrigins = JSON.parse(process.env.BACKEND_CORS_ORIGINS || '["*"]');
+
+  // Setup CORS with dynamic origins using TypeScript types
+  const corsOptions: cors.CorsOptions = {
+    origin: (origin, callback) => {
+      if (!origin || corsOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+  };
+
+  // enable cors
+  app.use(cors(corsOptions));
+  app.options('*', cors(corsOptions));
 }
 
 // v1 api routes
