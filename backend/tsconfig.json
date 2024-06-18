@@ -1,4 +1,3 @@
-// for express ts
 {
   "compilerOptions": {
     "target": "es2017",
