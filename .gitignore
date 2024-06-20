@@ -84,3 +84,5 @@ venv.bak/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+/data/*
