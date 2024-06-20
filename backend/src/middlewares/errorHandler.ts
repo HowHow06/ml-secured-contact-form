@@ -1,5 +1,5 @@
 import express from 'express';
-import { handleError } from '../utils/errorHandler';
+import { handleError } from 'src/utils/errorHandler';
 
 // error handler
 const errorHandlerMiddleware: express.ErrorRequestHandler = (
