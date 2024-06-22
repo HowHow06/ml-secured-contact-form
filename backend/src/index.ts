@@ -11,7 +11,7 @@ import ApiError from './utils/apiError';
 import logger from './utils/logger';
 
 const app: Express = express();
-const port = process.env.PORT || 3000;
+const port = config.port || 3000;
 
 // set security HTTP headers
 app.use(helmet());
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 
 if (config.env === 'production') {
   // Parse the environment variable into an array
-  const corsOrigins = JSON.parse(process.env.BACKEND_CORS_ORIGINS || '["*"]');
+  const corsOrigins = JSON.parse(config.backendCorsOrigins || '["*"]');
 
   // Setup CORS with dynamic origins using TypeScript types
   const corsOptions: cors.CorsOptions = {
