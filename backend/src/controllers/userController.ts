@@ -28,6 +28,24 @@ const submitContactForm = async (
   }
 };
 
+const getProfileFromToken = async (
+  req: express.Request,
+  res: express.Response,
+) => {
+  const currentUser = req.user;
+
+  if (currentUser === undefined) {
+    res.status(401).send({ message: 'Invalid User' });
+    return;
+  }
+
+  res.status(200).json({
+    message: 'Authenticated user.',
+    user: userService.extractUserProfile(currentUser),
+  });
+};
+
 export default {
   submitContactForm,
+  getProfileFromToken,
 };

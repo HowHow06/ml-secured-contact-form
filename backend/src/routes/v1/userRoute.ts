@@ -12,5 +12,10 @@ router.post(
   validateBody(UserContactFormDto),
   userController.submitContactForm,
 );
+router.get(
+  '/profile',
+  authMiddleware.authenticate,
+  userController.getProfileFromToken,
+);
 
 export default router;

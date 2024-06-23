@@ -74,13 +74,24 @@ const resetLoginTrial = async (user: SelectUser) => {
 };
 
 const updateUser = async (user: SelectUser) => {
-  const { id, ...restFields } = user;
+  const { pk, ...restFields } = user;
   await db
     .update(users)
     .set({
       ...restFields,
     })
-    .where(eq(users.id, id));
+    .where(eq(users.pk, pk));
+};
+
+const extractUserProfile = (user: SelectUser) => {
+  const { id, email, fullname, dob, nric } = user;
+  return {
+    id,
+    email,
+    fullname,
+    dob,
+    nric,
+  };
 };
 
 export default {
@@ -92,4 +103,5 @@ export default {
   resetLoginTrial,
   getUserByUuid,
   updateUser,
+  extractUserProfile,
 };
