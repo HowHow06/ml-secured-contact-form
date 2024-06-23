@@ -12,7 +12,7 @@ export class UserRegisterDto {
   email: string;
 
   @IsString()
-  @Length(8, 100)
+  @Length(8, 200)
   password: string;
 }
 
@@ -22,7 +22,7 @@ export class UserLoginDto {
   email: string;
 
   @IsString()
-  @Length(8, 100)
+  @Length(8, 200)
   password: string;
 }
 
