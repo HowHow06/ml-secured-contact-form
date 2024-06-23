@@ -65,7 +65,18 @@ const login = async (req: express.Request, res: express.Response) => {
   });
 };
 
+const logout = async (_req: express.Request, res: express.Response) => {
+  res.cookie('jwt', '', {
+    maxAge: 0,
+  });
+
+  return res.status(200).json({
+    message: 'Logout successful.',
+  });
+};
+
 export default {
   signup,
   login,
+  logout,
 };
