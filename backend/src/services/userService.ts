@@ -13,6 +13,15 @@ const getUserByEmail = async (email: string) => {
   return user.length ? user[0] : null;
 };
 
+const getUserByUuid = async (uuid: string) => {
+  const user = await db
+    .select()
+    .from(users)
+    .where(and(eq(users.id, uuid), isNull(users.deletedAt)))
+    .limit(1);
+  return user.length ? user[0] : null;
+};
+
 const registerUser = async ({
   email,
   password,
@@ -64,6 +73,16 @@ const resetLoginTrial = async (user: SelectUser) => {
     .where(eq(users.pk, user.pk));
 };
 
+const updateUser = async (user: SelectUser) => {
+  const { id, ...restFields } = user;
+  await db
+    .update(users)
+    .set({
+      ...restFields,
+    })
+    .where(eq(users.id, id));
+};
+
 export default {
   getUserByEmail,
   createUser,
@@ -71,4 +90,6 @@ export default {
   getUserBlockedAt,
   handleFailedLogin,
   resetLoginTrial,
+  getUserByUuid,
+  updateUser,
 };
