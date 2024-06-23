@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useToast } from "../ui/use-toast";
 
 type Props = {};
 
@@ -40,6 +41,7 @@ const LoginForm = (props: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const { refreshAuthContext } = useAuthContext();
+  const { toast } = useToast();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { email, password } = values;
@@ -49,6 +51,12 @@ const LoginForm = (props: Props) => {
         email: email,
         password: password,
       });
+
+      if (res.ok) {
+        await refreshAuthContext();
+        router.push("/user");
+        return;
+      }
 
       const data = await res.json();
 
@@ -69,15 +77,16 @@ const LoginForm = (props: Props) => {
             message: "Password is invalid, please check your input.",
           });
         }
-
-        setIsSubmitting(false);
-        return;
       }
 
-      if (res.ok) {
-        await refreshAuthContext();
-        router.push("/user");
+      if (data.message) {
+        toast({
+          title: "Login failed",
+          description: data.message,
+        });
       }
+
+      setIsSubmitting(false);
     } catch (err) {
       console.log(err);
     }

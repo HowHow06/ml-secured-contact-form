@@ -71,6 +71,18 @@ const SignupForm = (props: Props) => {
         email: email,
         password: password,
       });
+
+      if (res.ok) {
+        toast({
+          title: "Account Signed Up!",
+          description: "Redirecting to login page in few seconds...",
+        });
+        setTimeout(() => {
+          router.push("/login");
+        }, 5000);
+        return;
+      }
+
       const data = await res.json();
 
       if (data.errors) {
@@ -95,14 +107,10 @@ const SignupForm = (props: Props) => {
         return;
       }
 
-      if (res.ok) {
+      if (data.message) {
         toast({
-          title: "Account Signed Up!",
-          description: "Redirecting to login page in few seconds...",
+          title: data.message,
         });
-        setTimeout(() => {
-          router.push("/login");
-        }, 5000);
       }
     } catch (err) {
       console.log(err);
