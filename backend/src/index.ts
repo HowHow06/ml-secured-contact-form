@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
 import helmet from 'helmet';
@@ -12,6 +13,8 @@ import logger from './utils/logger';
 
 const app: Express = express();
 const port = config.port || 3000;
+
+app.use(cookieParser());
 
 // set security HTTP headers
 app.use(helmet());
