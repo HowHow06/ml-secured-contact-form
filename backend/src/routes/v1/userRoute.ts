@@ -12,7 +12,7 @@ router.post(
   validateBody(UserContactFormDto),
   userController.submitContactForm,
 );
-router.get(
+router.post(
   '/profile',
   authMiddleware.authenticate,
   userController.getProfileFromToken,
