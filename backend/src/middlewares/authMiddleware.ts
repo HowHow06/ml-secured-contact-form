@@ -17,7 +17,6 @@ const authenticate = async (
   res: express.Response,
   next: express.NextFunction,
 ) => {
-  console.log(req.cookies);
   const token = req.cookies?.jwt;
 
   if (!token) {
