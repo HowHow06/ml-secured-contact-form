@@ -48,6 +48,7 @@ if (config.env === 'development') {
         callback(new Error('Not allowed by CORS'));
       }
     },
+    credentials: true,
   };
 
   // enable cors
