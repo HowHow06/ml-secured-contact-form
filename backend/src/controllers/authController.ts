@@ -1,7 +1,7 @@
 import express from 'express';
 import userService from 'src/services/userService';
 import authUtil from 'src/utils/authUtil';
-import { AUTH_BLOCK_TIME } from 'src/utils/constants';
+import { AUTH_BLOCK_TIME, AUTH_MAX_AGE_IN_SECOND } from 'src/utils/constants';
 
 const signup = async (req: express.Request, res: express.Response) => {
   const { email, password } = req.body;
@@ -53,9 +53,15 @@ const login = async (req: express.Request, res: express.Response) => {
 
   await userService.resetLoginTrial(user);
   const authToken = await authUtil.createAuthToken(user.id);
+
+  res.cookie('jwt', authToken, {
+    httpOnly: true,
+    maxAge: AUTH_MAX_AGE_IN_SECOND * 1000,
+  });
+
   return res.status(200).json({
     message: 'Login successful.',
-    authToken: authToken,
+    authToken: user.id,
   });
 };
 
