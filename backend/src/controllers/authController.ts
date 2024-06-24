@@ -13,7 +13,9 @@ const signup = catchAsync(
     const existingUser = await userService.getUserByEmail(email);
 
     if (existingUser !== null) {
-      res.status(409).json({ message: 'Email already registered.' });
+      res
+        .status(httpStatus.CONFLICT)
+        .json({ message: 'Email already registered.' });
       return;
     }
 
@@ -22,7 +24,9 @@ const signup = catchAsync(
         email: email,
         password: password,
       });
-      res.status(201).send({ message: 'User registered successfully' });
+      res
+        .status(httpStatus.CREATED)
+        .send({ message: 'User registered successfully' });
     } catch (error) {
       throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to register user.');
     }
@@ -39,7 +43,7 @@ const login = catchAsync(
 
     // user is blocked
     if (userBlockedAt && userBlockedAt > authBlockStartTime) {
-      res.status(403).json({
+      res.status(httpStatus.FORBIDDEN).json({
         message: 'Too many failed attempts. Account temporarily locked.',
       });
       return;
@@ -47,7 +51,7 @@ const login = catchAsync(
 
     const user = await userService.getUserByEmail(email);
     if (user === null) {
-      res.status(401).json({
+      res.status(httpStatus.UNAUTHORIZED).json({
         message: 'Invalid email or password.',
       });
       return;
@@ -55,7 +59,7 @@ const login = catchAsync(
 
     if (!(await authUtil.verifyPassword(password, user.hashedPassword))) {
       await userService.handleFailedLogin(user);
-      res.status(401).json({
+      res.status(httpStatus.UNAUTHORIZED).json({
         message: 'Invalid email or password.',
       });
       return;
@@ -69,7 +73,7 @@ const login = catchAsync(
       maxAge: AUTH_MAX_AGE_IN_SECOND * 1000,
     });
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: 'Login successful.',
     });
   },
@@ -81,7 +85,7 @@ const logout = catchAsync(
       maxAge: 0,
     });
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: 'Logout successful.',
     });
   },

@@ -10,7 +10,7 @@ const submitContactForm = catchAsync(
     const currentUser = req.user;
 
     if (currentUser === undefined) {
-      res.status(401).send({ message: 'Invalid User' });
+      res.status(httpStatus.UNAUTHORIZED).send({ message: 'Invalid User' });
       return;
     }
 
@@ -21,7 +21,7 @@ const submitContactForm = catchAsync(
         dob: dob,
         nric: nric,
       });
-      res.status(200).json({
+      res.status(httpStatus.OK).json({
         message: 'User updated successfully',
       });
     } catch (error) {
@@ -35,11 +35,11 @@ const getProfileFromToken = catchAsync(
     const currentUser = req.user;
 
     if (currentUser === undefined) {
-      res.status(401).send({ message: 'Invalid User' });
+      res.status(httpStatus.UNAUTHORIZED).send({ message: 'Invalid User' });
       return;
     }
 
-    res.status(200).json({
+    res.status(httpStatus.OK).json({
       message: 'Authenticated user.',
       user: userService.extractUserProfile(currentUser),
     });
