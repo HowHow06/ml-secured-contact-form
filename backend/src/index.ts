@@ -1,12 +1,16 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import csrf from 'csurf';
 import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import http from 'http';
 import httpStatus from 'http-status';
 import config from './config/config';
-import errorHandlerMiddleware from './middlewares/errorHandler';
+import {
+  errorConverterMiddleware,
+  errorHandlerMiddleware,
+} from './middlewares/error';
 import morganMiddleware from './middlewares/httpLogger';
 import router from './routes/v1';
 import ApiError from './utils/apiError';
@@ -17,7 +21,7 @@ const port = config.port || 3000;
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
+  max: 50,
   message: 'Too many requests from this IP, please try again after 15 minutes',
   headers: true,
 });
@@ -36,6 +40,16 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+
+// CSRF protection middleware
+const csrfProtection = csrf({ cookie: true });
+
+// app.use(csrfProtection);
+
+// Route to generate a CSRF token
+// app.get('/csrf-token', (req, res) => {
+//   res.json({ csrfToken: req.csrfToken() });
+// });
 
 const corsOrigins = JSON.parse(config.backendCorsOrigins || '["*"]');
 
@@ -67,7 +81,9 @@ app.use((_req, _res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
 });
 
+app.use(errorConverterMiddleware);
 app.use(errorHandlerMiddleware);
+
 app.set('port', port);
 
 const server = http.createServer(app);
