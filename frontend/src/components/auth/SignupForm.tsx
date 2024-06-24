@@ -41,7 +41,8 @@ const formSchema = z
       })
       .regex(/[0-9]/, { message: "Password must contain at least one number." })
       .regex(/[!@#$%^&*]/, {
-        message: "Password must contain at least one special character.",
+        message:
+          "Password must contain at least one special character (!@#$%^&*).",
       }),
     rePassword: z.string().trim(),
   })
