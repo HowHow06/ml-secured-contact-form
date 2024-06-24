@@ -28,10 +28,9 @@ export class UserRegisterDto {
   })
   @Matches(/[0-9]/, { message: 'Password must contain at least one number.' })
   @Matches(/[!@#$%^&*]/, {
-    message: 'Password must contain at least one special character.',
+    message: 'Password must contain at least one special character (!@#$%^&*).',
   })
   @Transform(({ value }) => validator.trim(value))
-  @Transform(({ value }) => validator.escape(value))
   password: string;
 }
 
@@ -46,7 +45,6 @@ export class UserLoginDto {
   @IsString()
   @Length(8, 200)
   @Transform(({ value }) => validator.trim(value))
-  @Transform(({ value }) => validator.escape(value))
   password: string;
 }
 
