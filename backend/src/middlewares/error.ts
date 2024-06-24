@@ -11,7 +11,6 @@ const errorConverterMiddleware: express.ErrorRequestHandler = (
   next,
 ) => {
   let error = err;
-  logger.error('ERROR CONVERTER');
   if (!(error instanceof ApiError)) {
     const statusCode = (error.statusCode ||
       httpStatus.BAD_REQUEST) as keyof HttpStatus;
@@ -30,7 +29,6 @@ const errorHandlerMiddleware: express.ErrorRequestHandler = (
 ) => {
   const { statusCode, message } = err;
 
-  logger.error('ERROR HANDLER');
   if (config.env === 'development') {
     logger.error(err);
   }
