@@ -7,6 +7,7 @@ import {
   Length,
   Matches,
 } from 'class-validator';
+import sanitizeHtml from 'sanitize-html';
 import validator from 'validator';
 
 export class UserRegisterDto {
@@ -54,6 +55,7 @@ export class UserContactFormDto {
   @Length(1, 100)
   @Transform(({ value }) => validator.trim(value))
   @Transform(({ value }) => validator.escape(value))
+  @Transform(({ value }) => sanitizeHtml(value))
   fullname: string;
 
   @IsDateString()
