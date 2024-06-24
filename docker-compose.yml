@@ -15,3 +15,39 @@ services:
       - 3306:3306
     env_file:
       - ./.env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    image: "backend-image" # just image name
+    build:
+      context: .
+      dockerfile: ./.docker/backend/Dockerfile
+      target: runner
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./.env
+    ports:
+      - 8000:8000
+    environment:
+      - MYSQL_SERVER=db
+
+  frontend:
+    image: "frontend-image" # just image name
+    depends_on:
+      - backend
+    env_file:
+      - ./.env
+    build:
+      context: .
+      dockerfile: ./.docker/frontend/Dockerfile
+      target: runner
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    ports:
+      - 3000:3000
