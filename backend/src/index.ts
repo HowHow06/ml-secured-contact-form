@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Express } from 'express';
+import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import http from 'http';
 import httpStatus from 'http-status';
@@ -13,6 +14,15 @@ import logger from './utils/logger';
 
 const app: Express = express();
 const port = config.port || 3000;
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,
+  message: 'Too many requests from this IP, please try again after 15 minutes',
+  headers: true,
+});
+
+app.use(limiter);
 
 app.use(cookieParser());
 
