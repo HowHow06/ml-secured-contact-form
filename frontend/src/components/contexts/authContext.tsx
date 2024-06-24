@@ -1,6 +1,6 @@
 "use client";
-import userApi from "@/api/userApi";
-import { User } from "@/types/base";
+import userApi from "@/lib/api/userApi";
+import { User } from "@/lib/types/base";
 import {
   ReactNode,
   createContext,

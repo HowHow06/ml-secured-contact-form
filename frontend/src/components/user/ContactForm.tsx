@@ -1,5 +1,5 @@
 "use client";
-import userApi from "@/api/userApi";
+import { useAuthContext } from "@/components/contexts/authContext";
 import {
   Form,
   FormControl,
@@ -9,7 +9,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useAuthContext } from "@/contexts/authContext";
+import userApi from "@/lib/api/userApi";
 import { validateNRICDate } from "@/lib/utils";
 import { extractValidationError } from "@/lib/validationErrorHelper";
 import { zodResolver } from "@hookform/resolvers/zod";

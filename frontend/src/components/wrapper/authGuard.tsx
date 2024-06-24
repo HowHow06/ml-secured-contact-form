@@ -1,18 +1,22 @@
 "use client";
 
-import { useAuthContext } from "@/contexts/authContext";
+import { useAuthContext } from "@/components/contexts/authContext";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
 type Props = {
   children: ReactNode;
 };
-const AuthRedirect: React.FC<Props> = (props) => {
+const AuthGuard: React.FC<Props> = (props) => {
   const { children } = props;
   const router = useRouter();
   const { user } = useAuthContext();
   const ignore = useRef(false);
   const [checked, setChecked] = useState(false);
+
+  // Only do authentication check on component mount.
+  // This flow allows you to manually redirect the user after sign-out, otherwise this will be
+  // triggered and will automatically redirect to sign-in page.
 
   useEffect(() => {
     // not initialized yet
@@ -24,10 +28,12 @@ const AuthRedirect: React.FC<Props> = (props) => {
     if (ignore.current) {
       return;
     }
+
     ignore.current = true;
 
-    if (user !== null) {
-      router.push("/user");
+    // initialized but user not found
+    if (user === null) {
+      router.push("/login");
       return;
     }
 
@@ -38,7 +44,10 @@ const AuthRedirect: React.FC<Props> = (props) => {
     return null;
   }
 
+  // If got here, it means that the redirect did not occur, and that tells us that the user is
+  // authenticated / authorized.
+
   return children;
 };
 
-export default AuthRedirect;
+export default AuthGuard;

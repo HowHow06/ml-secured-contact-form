@@ -1,7 +1,7 @@
 "use client";
-import authApi from "@/api/authApi";
+import { useAuthContext } from "@/components/contexts/authContext";
 import { Button } from "@/components/ui/button";
-import { useAuthContext } from "@/contexts/authContext";
+import authApi from "@/lib/api/authApi";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

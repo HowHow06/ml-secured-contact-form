@@ -1,4 +1,4 @@
-import { ValidationError } from "@/types/base";
+import { ValidationError } from "@/lib/types/base";
 
 export const extractValidationError = (errors: any, fieldname: string) => {
   const tempErrors = errors as ValidationError[];

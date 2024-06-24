@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "@/config/config";
+import { API_BASE_URL } from "@/lib/config/config";
 
 const getProfileFromToken = async () => {
   return await fetch(`${API_BASE_URL}/user/profile`, {

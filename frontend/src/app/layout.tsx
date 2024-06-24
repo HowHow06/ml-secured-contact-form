@@ -1,5 +1,5 @@
+import { AuthContextProvider } from "@/components/contexts/authContext";
 import { Toaster } from "@/components/ui/toaster";
-import { AuthContextProvider } from "@/contexts/authContext";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
