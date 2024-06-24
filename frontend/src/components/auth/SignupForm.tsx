@@ -102,16 +102,15 @@ const SignupForm = (props: Props) => {
             message: "Password is invalid, please check your input.",
           });
         }
-
-        setIsSubmitting(false);
-        return;
       }
 
       if (data.message) {
         toast({
-          title: data.message,
+          title: `Sign Up Failed`,
+          description: `${data.message}`,
         });
       }
+      setIsSubmitting(false);
     } catch (err) {
       console.log(err);
     }
