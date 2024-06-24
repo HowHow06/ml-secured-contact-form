@@ -1,5 +1,5 @@
 "use client";
-import { useAuthContext } from "@/components/contexts/authContext";
+import { useAuthContext } from "@/components/contexts/AuthContext";
 import { useEffect, useState } from "react";
 
 type Props = {};

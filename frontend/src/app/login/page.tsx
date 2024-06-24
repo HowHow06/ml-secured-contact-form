@@ -1,6 +1,6 @@
 import LoginForm from "@/components/auth/LoginForm";
 import { Button } from "@/components/ui/button";
-import AuthRedirect from "@/components/wrapper/authRedirect";
+import AuthRedirect from "@/components/wrapper/AuthRedirect";
 import Link from "next/link";
 
 type Props = {};

@@ -1,4 +1,4 @@
-import AuthGuard from "@/components/wrapper/authGuard";
+import AuthGuard from "@/components/wrapper/AuthGuard";
 
 export default function Layout({
   children,

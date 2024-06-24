@@ -1,5 +1,5 @@
 "use client";
-import { useAuthContext } from "@/components/contexts/authContext";
+import { useAuthContext } from "@/components/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   Form,
