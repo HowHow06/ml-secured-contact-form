@@ -1,3 +1,4 @@
+import { Transform } from 'class-transformer';
 import {
   IsDateString,
   IsEmail,
@@ -6,10 +7,14 @@ import {
   Length,
   Matches,
 } from 'class-validator';
+import validator from 'validator';
 
 export class UserRegisterDto {
   @IsEmail()
   @Length(8, 200)
+  @Transform(({ value }) => validator.trim(value))
+  @Transform(({ value }) => validator.normalizeEmail(value))
+  @Transform(({ value }) => validator.escape(value))
   email: string;
 
   @IsString()
@@ -24,22 +29,31 @@ export class UserRegisterDto {
   @Matches(/[!@#$%^&*]/, {
     message: 'Password must contain at least one special character.',
   })
+  @Transform(({ value }) => validator.trim(value))
+  @Transform(({ value }) => validator.escape(value))
   password: string;
 }
 
 export class UserLoginDto {
   @IsEmail()
   @Length(8, 200)
+  @Transform(({ value }) => validator.trim(value))
+  @Transform(({ value }) => validator.normalizeEmail(value))
+  @Transform(({ value }) => validator.escape(value))
   email: string;
 
   @IsString()
   @Length(8, 200)
+  @Transform(({ value }) => validator.trim(value))
+  @Transform(({ value }) => validator.escape(value))
   password: string;
 }
 
 export class UserContactFormDto {
   @IsNotEmpty()
   @Length(1, 100)
+  @Transform(({ value }) => validator.trim(value))
+  @Transform(({ value }) => validator.escape(value))
   fullname: string;
 
   @IsDateString()
@@ -47,5 +61,7 @@ export class UserContactFormDto {
 
   @IsNotEmpty()
   @Length(1, 12)
+  @Transform(({ value }) => validator.trim(value))
+  @Transform(({ value }) => validator.escape(value))
   nric: string;
 }
