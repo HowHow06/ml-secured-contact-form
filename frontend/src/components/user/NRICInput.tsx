@@ -11,11 +11,17 @@ const NRICInput = ({ value, onValueChange, ...rest }: Props) => {
     const { value } = e.target;
     const validInput = value.replace(/[^0-9-]/g, "");
 
-    const digitCount = value.replace(/-/g, "").length;
-    if (digitCount > 12) {
+    // Enforce maximum 2 hyphens
+    const hyphenCount = (value.match(/-/g) || []).length;
+    if (hyphenCount > 2) {
       return;
     }
 
+    // Enforce maximum length: 12 digits + 2 hyphens = 14 characters
+    const digitCount = value.replace(/-/g, "").length;
+    if (digitCount > 12 || value.length > 14) {
+      return;
+    }
     if (onValueChange) {
       onValueChange(validInput);
     }
