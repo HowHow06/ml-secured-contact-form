@@ -27,34 +27,27 @@ app.use(express.json());
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
 
-if (config.env === 'development') {
-  // enable cors for all
-  app.use(cors());
-  app.options('*', cors());
-} else {
-  // Parse the environment variable into an array
-  const corsOrigins = JSON.parse(config.backendCorsOrigins || '["*"]');
+const corsOrigins = JSON.parse(config.backendCorsOrigins || '["*"]');
 
-  // Setup CORS with dynamic origins using TypeScript types
-  const corsOptions: cors.CorsOptions = {
-    origin: (origin, callback) => {
-      if (
-        !origin ||
-        corsOrigins.indexOf('*') !== -1 ||
-        corsOrigins.indexOf(origin) !== -1
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
-      }
-    },
-    credentials: true,
-  };
+// Setup CORS with dynamic origins using TypeScript types
+const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    if (
+      !origin ||
+      corsOrigins.indexOf('*') !== -1 ||
+      corsOrigins.indexOf(origin) !== -1
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
 
-  // enable cors
-  app.use(cors(corsOptions));
-  app.options('*', cors(corsOptions));
-}
+// enable cors
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // v1 api routes
 app.use('/v1', router);
