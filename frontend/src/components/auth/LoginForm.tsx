@@ -89,6 +89,10 @@ const LoginForm = (props: Props) => {
       setIsSubmitting(false);
     } catch (err) {
       console.log(err);
+      toast({
+        title: "Login failed",
+        description: "Unexcepted error, please try again later.",
+      });
     }
   }
 

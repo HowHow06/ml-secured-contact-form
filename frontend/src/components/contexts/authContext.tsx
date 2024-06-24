@@ -33,15 +33,20 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const initialized = useRef(false);
 
   const refreshAuthContext = async () => {
-    const res = await userApi.getProfileFromToken();
+    try {
+      const res = await userApi.getProfileFromToken();
 
-    if (!res.ok) {
+      if (!res.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await res.json();
+      setUser(data.user);
+    } catch (error) {
       setUser(null);
       return;
     }
-
-    const data = await res.json();
-    setUser(data.user);
   };
 
   useEffect(() => {

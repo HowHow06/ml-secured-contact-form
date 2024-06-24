@@ -119,6 +119,10 @@ const SignupForm = (props: Props) => {
       setIsSubmitting(false);
     } catch (err) {
       console.log(err);
+      toast({
+        title: "Sign Up failed",
+        description: "Unexcepted error, please try again later.",
+      });
     }
   }
 
@@ -202,7 +206,11 @@ const SignupForm = (props: Props) => {
             )}
           />
           <div className="flex justify-center">
-            <Button type="submit" className="w-full" disabled={isSubmitting || form.getValues().consent === false}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isSubmitting || form.getValues().consent === false}
+            >
               Sign Up
             </Button>
           </div>
