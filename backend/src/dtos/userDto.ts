@@ -8,6 +8,7 @@ import {
   Matches,
 } from 'class-validator';
 import sanitizeHtml from 'sanitize-html';
+import { IsNRIC } from 'src/validators/IsNRIC';
 import validator from 'validator';
 
 export class UserRegisterDto {
@@ -59,7 +60,7 @@ export class UserContactFormDto {
   dob: Date;
 
   @IsNotEmpty()
-  @Length(1, 12)
+  @IsNRIC()
   @Transform(({ value }) => validator.trim(value))
   @Transform(({ value }) => validator.escape(value))
   nric: string;
