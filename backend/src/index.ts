@@ -1,6 +1,5 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import csrf from 'csurf';
 import express, { Express } from 'express';
 import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
@@ -40,16 +39,6 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
-
-// CSRF protection middleware
-const csrfProtection = csrf({ cookie: true });
-
-// app.use(csrfProtection);
-
-// Route to generate a CSRF token
-// app.get('/csrf-token', (req, res) => {
-//   res.json({ csrfToken: req.csrfToken() });
-// });
 
 const corsOrigins = JSON.parse(config.backendCorsOrigins || '["*"]');
 
