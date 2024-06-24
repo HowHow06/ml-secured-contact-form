@@ -8,6 +8,27 @@ const getProfileFromToken = async () => {
   });
 };
 
-const userApi = { getProfileFromToken };
+const submitContactForm = async ({
+  fullname,
+  dob,
+  nric,
+}: {
+  fullname: string;
+  dob: string;
+  nric: string;
+}) => {
+  return await fetch(`${API_BASE_URL}/user/contact-form`, {
+    method: "POST",
+    body: JSON.stringify({
+      fullname,
+      dob,
+      nric,
+    }),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+};
+
+const userApi = { getProfileFromToken, submitContactForm };
 
 export default userApi;

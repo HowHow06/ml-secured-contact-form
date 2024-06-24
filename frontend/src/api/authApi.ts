@@ -30,6 +30,14 @@ const signup = async ({
   });
 };
 
-const authApi = { login, signup };
+const logout = async () => {
+  return await fetch(`${API_BASE_URL}/auth/logout`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
+};
+
+const authApi = { login, signup, logout };
 
 export default authApi;

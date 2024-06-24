@@ -1,24 +1,24 @@
-import LogoutButton from "@/components/auth/LogoutButton";
 import { Button } from "@/components/ui/button";
+import ContactForm from "@/components/user/ContactForm";
 import Link from "next/link";
 
 type Props = {};
 
-const UserPage = (props: Props) => {
+const ContactFormPage = (props: Props) => {
   return (
     <main>
       <div>
-        <h1 className="text-4xl font-bold my-10 text-center">Hi user</h1>
+        <h1 className="text-4xl font-bold my-10 text-center">Contact Form</h1>
+        <ContactForm />
 
         <div className="flex flex-col items-center space-y-4 mt-9">
           <Button variant="outline" className="w-80" asChild>
-            <Link href={`/user/contact-form`}>Contact Form</Link>
+            <Link href={`/user`}>Back to Dashboard</Link>
           </Button>
-          <LogoutButton className="w-80" />
         </div>
       </div>
     </main>
   );
 };
 
-export default UserPage;
+export default ContactFormPage;
