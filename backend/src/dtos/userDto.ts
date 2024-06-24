@@ -54,7 +54,6 @@ export class UserContactFormDto {
   @IsNotEmpty()
   @Length(1, 100)
   @Transform(({ value }) => validator.trim(value))
-  @Transform(({ value }) => validator.escape(value))
   @Transform(({ value }) => sanitizeHtml(value))
   fullname: string;
 
