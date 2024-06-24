@@ -11,6 +11,7 @@ import {
   errorHandlerMiddleware,
 } from './middlewares/error';
 import morganMiddleware from './middlewares/httpLogger';
+import healthcheckRoute from './routes/healthcheckRoute';
 import router from './routes/v1';
 import ApiError from './utils/apiError';
 import logger from './utils/logger';
@@ -62,6 +63,7 @@ const corsOptions: cors.CorsOptions = {
 app.use(cors(corsOptions));
 app.options('*', cors(corsOptions));
 
+app.use('/', healthcheckRoute);
 // v1 api routes
 app.use('/v1', router);
 

@@ -4,6 +4,6 @@ import healthcheckController from 'src/controllers/healthcheckController';
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', healthcheckController.healthCheck);
+router.get('/healthcheck', healthcheckController.healthCheck);
 
 export default router;
