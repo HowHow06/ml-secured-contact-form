@@ -128,6 +128,11 @@ const ContactForm = (props: Props) => {
       setIsSubmitting(false);
     } catch (err) {
       console.log(err);
+
+      toast({
+        title: "Submit failed",
+        description: "Unexcepted error, please try again later.",
+      });
     }
   }
 
