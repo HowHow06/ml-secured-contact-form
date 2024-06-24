@@ -72,3 +72,9 @@
 - **Backend Error Handling and Logging with Winston and Morgan**: Provides robust error handling and logging.
 - **Frontend Route Protection**: Redirects users to login for protected routes.
 - **User Consent During Signup**: Shows consent form during signup to store personal data (e.g., NRIC).
+
+## Future Security Enhancements 
+
+- Use a CDN like Cloudflare to hide the server's IP address and distribute traffic, adding protection against DDoS attacks.
+- Enforce HTTPS to encrypt data transmitted between the client and server.
+- Implement a WAF to filter and block malicious traffic, protecting against common web application attacks.
