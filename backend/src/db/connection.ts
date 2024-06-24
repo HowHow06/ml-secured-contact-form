@@ -24,7 +24,7 @@ const connectWithRetry = async (): Promise<ReturnType<
     return drizzle(connection, { schema, mode: 'default' });
   } catch (err) {
     retries += 1;
-    console.error(`Database connection failed (attempt ${retries}):`, err);
+    logger.error(`Database connection failed (attempt ${retries}):`, err);
     if (retries < MAX_RETRIES) {
       logger.warn(
         `Retrying connection in 5 seconds... (${retries}/${MAX_RETRIES})`,
@@ -32,7 +32,7 @@ const connectWithRetry = async (): Promise<ReturnType<
       await new Promise(resolve => setTimeout(resolve, 5000));
       return connectWithRetry();
     } else {
-      console.error('Max retries reached. Exiting...');
+      logger.error('Max retries reached. Exiting...');
       process.exit(1);
     }
   }
